@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Khushi ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+  text-align: center;
+}
+
+.card {
+  position: relative;
+  z-index: 10;
+  background: rgba(0,0,0,0.3);
+  padding: 40px;
+  border-radius: 25px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  max-width: 420px;
+  animation: fadeIn 2s ease;
+}
+
+h1 { font-size: 2.6em; margin-bottom: 5px; }
+h2 { font-size: 1.8em; margin-top: 0; }
+
+.date {
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1.2em;
+  line-height: 1.6;
+}
+
+.heart {
+  font-size: 3.5em;
+  margin: 20px 0;
+  animation: beat 1s infinite;
+}
+
+@keyframes beat {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.from {
+  margin-top: 25px;
+  font-style: italic;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 Background Music -->
+<audio autoplay loop>
+  <source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 🎆 Fireworks Canvas -->
+<canvas id="fireworks"></canvas>
+
+<div class="card">
+  <h1>Happy Birthday 🎉</h1>
+  <h2>Khushi ❤️</h2>
+  <div class="date">25 January 2026</div>
+
+  <div class="heart">💖</div>
+
+  <p>
+    Khushi, tum meri life ka sabse pyara hissa ho ✨  
+    Tumhari smile meri har problem bhula deti hai 😊  
+    Aaj ka din sirf tumhare liye hai 💕  
+    I promise, hamesha tumhare sath rahunga ❤️
+  </p>
+
+  <div class="from">
+    — Tumhara ❤️
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+function random(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+function createFirework() {
+  const x = random(0, canvas.width);
+  const y = random(0, canvas.height / 2);
+  const count = 50;
+
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x, y,
+      radius: 2,
+      color: `hsl(${random(0,360)},100%,60%)`,
+      vx: random(-4,4),
+      vy: random(-4,4),
+      life: 100
+    });
+  }
+}
+
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach((p, i) => {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.life--;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+
+    if (p.life <= 0) particles.splice(i,1);
+  });
+
+  requestAnimationFrame(animate);
+}
+
+setInterval(createFirework, 800);
+animate();
+</script>
+
+</body>
+</html>
